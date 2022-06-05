@@ -1,62 +1,59 @@
-import ProForm, {ProFormInstance, ProFormSelect, ProFormText, ProFormTextArea} from "@ant-design/pro-form";
-import {Button, message, Upload} from "antd";
-import React, {useEffect, useRef, useState} from "react";
-import ImgCrop from 'antd-img-crop'
+import ProForm, { ProFormInstance, ProFormSelect, ProFormText, ProFormTextArea } from "@ant-design/pro-form";
+import { Button, message, Upload } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import ImgCrop from "antd-img-crop";
 import util from "../../../utils/util";
 import axios from "axios";
 import CalendarService from "../../../services/CalendarService";
 import UserService from "../../../services/UserService";
-import {size} from "lodash";
-import {DownloadOutlined} from "@ant-design/icons";
+import { size } from "lodash";
+import { DownloadOutlined } from "@ant-design/icons";
 
 const BasicSettings = () => {
-    const [userId, setUserId] = useState(-1)
-    const [imageUrl, setImageUrl] = useState('')
-    const formRef = useRef<
-        ProFormInstance<{
-            email: string;
-            nickname:string;
-            lang:string
-        }>
-        >();
+  const [userId, setUserId] = useState(-1);
+  const [imageUrl, setImageUrl] = useState("");
+  const formRef = useRef<
+    ProFormInstance<{ email: string; nickname: string; lang: string }>
+  >();
 
+  useEffect(
+    () => {
+      UserService
+        .getPersonalInfoThroughToken()
+        .then((res) => {
+          console.log(res);
+          formRef.current?.setFieldsValue({
+            email: res.email,
+            nickname: res.nickname,
+            lang: res.lang,
+          });
 
+          setUserId(res.id);
 
+          axios
+            .post(
+              "http://public-api.rico.org.cn/file/list",
+              { label: res.id, bucket: "qingkong-avatar" },
+            )
+            .then((res) => {
+              setImageUrl(util.genUrl(res.data[0]));
+            });
+        });
+    },
+    [],
+  );
 
-    useEffect(() => {
-        UserService.getPersonalInfoThroughToken().then((res) => {
-            console.log(res)
-            formRef.current?.setFieldsValue({
-                email: res.email,
-                nickname:res.nickname,
-                lang:res.lang
-            })
-
-            setUserId(res.id)
-
-            axios
-                .post('http://public-api.rico.org.cn/file/list', {
-                    label: res.id,
-                    bucket: 'qingkong-avatar',
-                })
-                .then((res) => {
-                    setImageUrl(util.genUrl(res.data[0]))
-                })
-        })
-
-    }, [])
-
-    const onChange = (info: any) => {
-        if (info.file.status === 'uploading') {
-            return
-        }
-        if (info.file.status === 'done') {
-            console.log(info)
-            setImageUrl(util.genUrl(info.file.response.generatedMaps[0]))
-        }
+  const onChange = (info: any) => {
+    if (info.file.status === "uploading") {
+      return;
     }
+    if (info.file.status === "done") {
+      console.log(info);
+      setImageUrl(util.genUrl(info.file.response.generatedMaps[0]));
+    }
+  };
   return (
-      <div style={{display:'flex'}}>
+    <div style={{display:'flex'}}>
           <ProForm<{
               name: string;
               company?: string;
@@ -126,7 +123,7 @@ const BasicSettings = () => {
               </ImgCrop>
           </div>
       </div>
-  )
-}
+  );
+};
 
-export default BasicSettings
+export default BasicSettings;

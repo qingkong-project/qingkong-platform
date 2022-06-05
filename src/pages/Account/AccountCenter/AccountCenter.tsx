@@ -1,10 +1,9 @@
 import React from "react";
 
 const AccountCenter: React.FC<any> = () => {
-
-    return <div>
+  return <div>
         asfas
-    </div>
-}
+    </div>;
+};
 
-export default AccountCenter
+export default AccountCenter;

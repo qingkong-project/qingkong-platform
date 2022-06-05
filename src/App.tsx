@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
 import routerConfig from "./routers";
 import { useRoutes } from "react-router-dom";
 
-interface IProps{
-}
+interface IProps {}
 
-const App:React.FC<IProps> = () => {
-  const useRoutesRouterConfig = useRoutes(routerConfig)
+const App: React.FC<IProps> = () => {
+  const useRoutesRouterConfig = useRoutes(routerConfig);
   return <div>
     {
       (useRoutesRouterConfig)
     }
-  </div>
-}
+  </div>;
+};
 
-export default App
+export default App;

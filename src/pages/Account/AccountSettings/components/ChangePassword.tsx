@@ -1,21 +1,24 @@
-import React, { useRef } from 'react';
-import { Button, message } from 'antd';
-import type { ProFormInstance } from '@ant-design/pro-form';
+import React, { useRef } from "react";
+import { Button, message } from "antd";
+import type { ProFormInstance } from "@ant-design/pro-form";
 import ProForm, {
   DrawerForm,
   ProFormText,
   ProFormDateRangePicker,
   ProFormSelect,
-} from '@ant-design/pro-form';
-import { PlusOutlined } from '@ant-design/icons';
+} from "@ant-design/pro-form";
+import { PlusOutlined } from "@ant-design/icons";
 // import {useSelector} from "react-redux";
 // import {UserService} from "../../../services/UserService";
 
 const waitTime = (time: number = 100) => {
   return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, time);
+    setTimeout(
+      () => {
+        resolve(true);
+      },
+      time,
+    );
   });
 };
 

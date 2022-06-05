@@ -1,11 +1,11 @@
-import React from 'react'
-import ProCard from '@ant-design/pro-card'
-import { Button, Input, message, Tooltip } from 'antd'
-import { CopyOutlined } from '@ant-design/icons'
+import React from "react";
+import ProCard from "@ant-design/pro-card";
+import { Button, Input, message, Tooltip } from "antd";
+import { CopyOutlined } from "@ant-design/icons";
 // import { copyToClipboard } from '../../../utils/util'
 
 export const SecurityTab = () => {
-  const token = localStorage.getItem('token') ?? ''
+  const token = localStorage.getItem("token") ?? "";
   return (
     <>
       <ProCard colSpan="24" layout="center" title="个人Token" bordered>
@@ -27,5 +27,5 @@ export const SecurityTab = () => {
         />
       </ProCard>
     </>
-  )
-}
+  );
+};

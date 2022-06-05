@@ -1,25 +1,23 @@
-import {List} from "antd";
+import { List } from "antd";
 import ChangePassword from "./components/ChangePassword";
-import React, {useState} from "react";
-import {SecurityTab} from "./components/Security";
+import React, { useState } from "react";
+import { SecurityTab } from "./components/Security";
 
 const SecuritySettings = () => {
-    const [currentTab, setTab] = useState('Security')
+  const [currentTab, setTab] = useState("Security");
 
-    // 生成当前页组件
-    const generateContent = () => {
-        switch (currentTab) {
-            case 'Security':
-                return <SecurityTab />
-            case '123':
-                return <div>123</div>
-        }
+  // 生成当前页组件
+  const generateContent = () => {
+    switch (currentTab) {
+      case "Security":
+        return <SecurityTab />;
+      case "123":
+        return <div>123</div>;
     }
-    const data = [
-        'Racing car sprays burning fuel into crowd.',
-    ];
+  };
+  const data = ["Racing car sprays burning fuel into crowd."];
   return (
-      <div>
+    <div>
           <List
               size="large"
               header={<h3>安全设置</h3>}
@@ -45,7 +43,7 @@ const SecuritySettings = () => {
                   </div>)}
           />
       </div>
-  )
-}
+  );
+};
 
-export default SecuritySettings
+export default SecuritySettings;

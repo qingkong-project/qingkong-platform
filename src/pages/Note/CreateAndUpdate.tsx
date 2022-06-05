@@ -1,19 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { message, Upload } from 'antd'
-import type { ProFormInstance } from '@ant-design/pro-form'
-import ProForm, {ProFormText, ProFormDatePicker, ProFormTextArea, ProFormSelect} from '@ant-design/pro-form'
-import { useNavigate, useParams } from 'react-router-dom'
-import moment from 'moment'
-import CalendarService from '../../services/CalendarService'
-import util from '../../utils/util'
+import React, { useEffect, useRef, useState } from "react";
+import { message, Upload } from "antd";
+import type { ProFormInstance } from "@ant-design/pro-form";
+import ProForm, {
+  ProFormText,
+  ProFormDatePicker,
+  ProFormTextArea,
+  ProFormSelect,
+} from "@ant-design/pro-form";
+import { useNavigate, useParams } from "react-router-dom";
+import moment from "moment";
+import CalendarService from "../../services/CalendarService";
+import util from "../../utils/util";
 import NoteService from "../../services/NoteService";
 import NoteDetail from "./NoteDetail/NoteDetail";
-import { Comment, Avatar } from 'antd';
-
-
+import { Comment, Avatar } from "antd";
 
 const ExampleComment = ({ children }) => (
-    <Comment
+  <Comment
         actions={[<span key="comment-nested-reply-to">Reply to</span>]}
         author={<a>Han Solo</a>}
         avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
@@ -30,54 +33,62 @@ const ExampleComment = ({ children }) => (
 
 const waitTime = (time = 100) => {
   return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true)
-    }, time)
-  })
-}
+    setTimeout(
+      () => {
+        resolve(true);
+      },
+      time,
+    );
+  });
+};
 
 export default () => {
-  const [detail,setDetail] = useState({})
-  const params = useParams()
-  const formRef: any = useRef<ProFormInstance<any>>()
-  const history = useNavigate()
-  const [imageUrl, setImageUrl] = useState('')
-  const [background, setBackground] = useState('#000000')
-  useEffect(() => {
-    if (params.id !== '-1') {
-      NoteService.retrieveANote({ noteId: Number(params.id) }).then((res) => {
-        setBackground(res.background || '#000000')
+  const [detail, setDetail] = useState({});
+  const params = useParams();
+  const formRef: any = useRef<ProFormInstance<any>>();
+  const history = useNavigate();
+  const [imageUrl, setImageUrl] = useState("");
+  const [background, setBackground] = useState("#000000");
+  useEffect(
+    () => {
+      if (params.id !== "-1") {
+        NoteService
+          .retrieveANote({ noteId: Number(params.id) })
+          .then((res) => {
+            setBackground(res.background || "#000000");
+            formRef.current?.setFieldsValue({
+              "title": res.title,
+              "content": res.content,
+              "reference": res.reference,
+              "author": res.author,
+              "occupation": res.occupation,
+              "status": res.status,
+            });
+            setDetail(res);
+          });
+      } else {
         formRef.current?.setFieldsValue({
-          "title":res.title,
-          "content":res.content,
-          "reference":res.reference,
-          "author":res.author,
-          "occupation":res.occupation,
-          "status":res.status,
-        })
-        setDetail(res)
-      })
-    } else {
-      formRef.current?.setFieldsValue({
-        "title":"",
-        "content":"",
-        "reference":"",
-        "author":"",
-        "occupation":"",
-        "status":0
-      })
-    }
-  }, [])
+          "title": "",
+          "content": "",
+          "reference": "",
+          "author": "",
+          "occupation": "",
+          "status": 0,
+        });
+      }
+    },
+    [],
+  );
 
   const onChange = (info: any) => {
-    if (info.file.status === 'uploading') {
-      return
+    if (info.file.status === "uploading") {
+      return;
     }
-    if (info.file.status === 'done') {
-      console.log(info)
-      setImageUrl(util.genUrl(info.file.response.generatedMaps[0]))
+    if (info.file.status === "done") {
+      console.log(info);
+      setImageUrl(util.genUrl(info.file.response.generatedMaps[0]));
     }
-  }
+  };
 
   return (
     <div style={{ backgroundColor: 'white', padding: '20px',display:'flex',justifyContent:'space-between' }}>
@@ -149,5 +160,5 @@ export default () => {
       </div>
 
     </div>
-  )
-}
+  );
+};

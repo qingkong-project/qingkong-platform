@@ -1,9 +1,8 @@
-import React from "react"
-import './NoteDetail.less'
-import {Button} from "antd";
+import React from "react";
+import "./NoteDetail.less";
+import { Button } from "antd";
 
-
-const NoteDetail = ({detail}) => {
+const NoteDetail = ({ detail }) => {
   return <div className={'note-detail'}>
       <div className={'header'}>
 
@@ -42,7 +41,7 @@ const NoteDetail = ({detail}) => {
 
 
 
-  </div>
-}
+  </div>;
+};
 
-export default NoteDetail
+export default NoteDetail;
